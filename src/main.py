@@ -25,18 +25,18 @@ def main(args):
         turn += 1
         player = next(player_symbols)
         players[player](board, player)
-        time.sleep(1)
 
         winner = board.check_win()
         if winner or turn >= 9:
             done = True
 
-    board.print()
+    print('done')
+    # board.print()
 
-    if winner:
-        print(win[winner])
-    else:
-        print("Looks like we tied...")
+    # if winner:
+    #     print(win[winner])
+    # else:
+    #     print("Looks like we tied...")
 
 
 def player_turn(board, symbol):
