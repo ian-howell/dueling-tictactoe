@@ -17,11 +17,12 @@ class Grid:
                 print(self.at(r, c), end='')
             print()
 
-    def set(self, r, c, val):
-        if not self.__is_valid(r, c):
-            fmt = "Cannot set ({}, {}) to {} (current val = {})"
-            raise Exception(fmt.format(r, c, val, self.at(r, c)))
-        self.grid[self.__index(r, c)] = val
+    def set(self, pos, val):
+        if (0 <= pos < self.size) and (self.grid[pos] == '-'):
+            self.grid[pos] = val
+        else:
+            fmt = "Cannot set [{}] to {}"
+            raise Exception(fmt.format(pos, val))
 
     def at(self, r, c):
         if (r < 0) or (r >= self.rows) or (c < 0) or (c >= self.cols):
