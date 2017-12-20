@@ -3,6 +3,8 @@
 # Created by Ian Howell on 12/20/17.
 # File name: main.py
 import grid
+import random
+import time
 
 
 def main():
@@ -12,17 +14,42 @@ def main():
     player_sym = "XO"
     for current_turn in range(9):
         board.print()
-        pos = int(input("Player {}:".format(player+1)))
-        board.set(pos, player_sym[player])
+        print("*"*8)
+        if player == 0:
+            invalid = True
+            while invalid:
+                invalid = False
+                pos = int(input(">>> "))
+                try:
+                    board.set(pos, player_sym[player])
+                except:
+                    print("But that's illegal...")
+                    invalid = True
 
+        else:
+            random_nonsense()
+            time.sleep(1)
+            pos = board.get_random_valid()
+            board.set(pos, player_sym[player])
         winner = board.check_win()
         if winner:
-            print("Player {} wins".format(winner))
             break
-
         player ^= 1
 
     board.print()
+    if winner:
+        if winner == 'X':
+            print("You got me!")
+        else:
+            print("I did it!")
+    else:
+        print("Looks like we tied...")
+
+
+def random_nonsense():
+    things = ("Good move!", "Hmm...", "I'm thinking", "You're on!",
+              "Really?", "Rookie mistake...", "I'm gonna win!")
+    print(random.sample(things, 1)[0])
 
 
 if __name__ == "__main__":

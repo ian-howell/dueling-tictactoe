@@ -2,6 +2,7 @@
 #
 # Created by Ian Howell on 12/20/17.
 # File name: grid.py
+import random
 
 
 class Grid:
@@ -44,3 +45,6 @@ class Grid:
                (self.at(board[0]) == self.at(board[2])):
                 return self.at(board[0])
         return None
+
+    def get_random_valid(self):
+        return random.sample(self.open_squares, 1)[0]
