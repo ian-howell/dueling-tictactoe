@@ -7,9 +7,6 @@ import grid
 
 def main():
     board = grid.Grid()
-    winning_boards = ((0, 1, 2), (3, 4, 5), (6, 7, 8),
-                      (0, 3, 6), (1, 4, 7), (2, 5, 8),
-                      (0, 4, 8), (2, 4, 6))
 
     player = 0
     player_sym = "XO"
@@ -17,6 +14,12 @@ def main():
         board.print()
         pos = int(input("Player {}:".format(player+1)))
         board.set(pos, player_sym[player])
+
+        winner = board.check_win()
+        if winner:
+            print("Player {} wins".format(winner))
+            break
+
         player ^= 1
 
     board.print()
