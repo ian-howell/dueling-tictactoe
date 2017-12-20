@@ -5,6 +5,7 @@
 from subprocess import Popen, PIPE
 
 import itertools
+import os
 import time
 
 bot_cmds = (['python3', '-u', 'run.py', '-x'], ['python3', '-u', 'run.py'])
@@ -14,6 +15,10 @@ bot2 = Popen(bot_cmds[1], stdout=PIPE, stdin=PIPE, bufsize=1,
              universal_newlines=True)
 bots = (bot1, bot2)
 
+output_file = 'log.txt'
+if os.path.isfile(output_file):
+    os.remove(output_file)
+
 for i in itertools.cycle([0, 1]):
     # Listen to bot i
     response = bots[i].stdout.readline().strip()
@@ -21,6 +26,9 @@ for i in itertools.cycle([0, 1]):
     # If bot i says we're done, stop
     if response == 'done':
         break
+
+    with open(output_file, 'a') as f:
+        f.write(str(response) + '\n')
 
     # Report back on what bot i said
     print("Bot {}: [{}]".format((i+1), response))
