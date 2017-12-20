@@ -2,60 +2,56 @@
 #
 # Created by Ian Howell on 12/20/17.
 # File name: main.py
-import grid
-import random
-import sys
+from src import grid
+import itertools
 import time
 
 
-def main():
+def main(args):
+    # Initialize the board
     board = grid.Grid()
 
-    if len(sys.argv) == 1:
-        player = 0
-        player_sym = "XO"
+    player_symbols = itertools.cycle('XO')
+    if args['is_x']:
+        players = {'X': bot_turn, 'O': player_turn}
+        win = {'X': 'Bot wins', 'O': 'Player wins'}
     else:
-        player = 1
-        player_sym = "OX"
-    for current_turn in range(9):
-        board.print()
-        print("*"*8)
-        if player == 0:
-            invalid = True
-            while invalid:
-                invalid = False
-                pos = int(input(">>> "))
-                try:
-                    board.set(pos, player_sym[player])
-                except:
-                    print("But that's illegal...")
-                    invalid = True
+        players = {'O': bot_turn, 'X': player_turn}
+        win = {'O': 'Bot wins', 'X': 'Player wins'}
 
-        else:
-            random_nonsense()
-            time.sleep(1)
-            pos = board.get_random_valid()
-            board.set(pos, player_sym[player])
+    done = False
+    turn = 0
+    while not done:
+        turn += 1
+        player = next(player_symbols)
+        players[player](board, player)
+        time.sleep(1)
+
         winner = board.check_win()
-        if winner:
-            break
-        player ^= 1
+        if winner or turn >= 9:
+            done = True
 
     board.print()
+
     if winner:
-        if winner == 'X':
-            print("You got me!")
-        else:
-            print("I did it!")
+        print(win[winner])
     else:
         print("Looks like we tied...")
 
 
-def random_nonsense():
-    things = ("Good move!", "Hmm...", "I'm thinking", "You're on!",
-              "Really?", "Rookie mistake...", "I'm gonna win!")
-    print(random.sample(things, 1)[0])
+def player_turn(board, symbol):
+    invalid = True
+    while invalid:
+        invalid = False
+        pos = int(input())
+        try:
+            board.set(pos, symbol)
+        except:
+            # print("But that's illegal...")
+            invalid = True
 
 
-if __name__ == "__main__":
-    main()
+def bot_turn(board, symbol):
+    pos = board.get_random_valid()
+    board.set(pos, symbol)
+    print(pos)
