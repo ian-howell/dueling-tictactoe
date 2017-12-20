@@ -18,6 +18,14 @@ class Grid:
                                 (0, 3, 6), (1, 4, 7), (2, 5, 8),
                                 (0, 4, 8), (2, 4, 6))
 
+    def __str__(self):
+        output = ""
+        for r in range(self.rows):
+            for c in range(self.cols):
+                output += str(self.at(r * self.cols + c))
+            output += '\n'
+        return output.strip()
+
     def print(self):
         for r in range(self.rows):
             for c in range(self.cols):

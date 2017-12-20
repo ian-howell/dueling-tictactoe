@@ -4,7 +4,6 @@
 # File name: main.py
 from src import grid
 import itertools
-import time
 
 
 def main(args):
@@ -14,10 +13,8 @@ def main(args):
     player_symbols = itertools.cycle('XO')
     if args['is_x']:
         players = {'X': bot_turn, 'O': player_turn}
-        win = {'X': 'Bot wins', 'O': 'Player wins'}
     else:
         players = {'O': bot_turn, 'X': player_turn}
-        win = {'O': 'Bot wins', 'X': 'Player wins'}
 
     done = False
     turn = 0
@@ -31,12 +28,11 @@ def main(args):
             done = True
 
     print('done')
-    # board.print()
 
-    # if winner:
-    #     print(win[winner])
-    # else:
-    #     print("Looks like we tied...")
+    if args['is_x']:
+        with open('results.txt', 'w') as f:
+            f.write("{} wins!\n".format(winner))
+            f.write(str(board) + '\n')
 
 
 def player_turn(board, symbol):
