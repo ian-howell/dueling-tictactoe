@@ -4,14 +4,19 @@
 # File name: main.py
 import grid
 import random
+import sys
 import time
 
 
 def main():
     board = grid.Grid()
 
-    player = 0
-    player_sym = "XO"
+    if len(sys.argv) == 1:
+        player = 0
+        player_sym = "XO"
+    else:
+        player = 1
+        player_sym = "OX"
     for current_turn in range(9):
         board.print()
         print("*"*8)
