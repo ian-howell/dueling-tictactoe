@@ -3,8 +3,9 @@
 # Created by Ian Howell on 12/20/17.
 # File name: test.py
 from subprocess import Popen, PIPE
-import time
 
+import itertools
+import time
 
 bot_cmds = (['python3', '-u', 'run.py', '-x'], ['python3', '-u', 'run.py'])
 bot1 = Popen(bot_cmds[0], stdout=PIPE, stdin=PIPE, bufsize=1,
@@ -13,19 +14,17 @@ bot2 = Popen(bot_cmds[1], stdout=PIPE, stdin=PIPE, bufsize=1,
              universal_newlines=True)
 bots = (bot1, bot2)
 
-response = bot1.stdout.readline().strip()
-print("1 says '{}'".format(response))
-time.sleep(1)
+for i in itertools.cycle([0, 1]):
+    # Listen to bot i
+    response = bots[i].stdout.readline().strip()
 
-while response != 'done':
-    bot2.stdin.write(response + '\n')
-    bot2.stdin.flush()
-    response = bot2.stdout.readline().strip()
-    print("2 says '{}'".format(response))
+    # If bot i says we're done, stop
+    if response == 'done':
+        break
+
+    # Report back on what bot i said
+    print("Bot {}: [{}]".format((i+1), response))
     time.sleep(1)
 
-    bot1.stdin.write(response + '\n')
-    bot1.stdin.flush()
-    response = bot1.stdout.readline().strip()
-    print("1 says '{}'".format(response))
-    time.sleep(1)
+    # Tell the other bot what bot i said
+    bots[i ^ 1].stdin.write(response + '\n')
