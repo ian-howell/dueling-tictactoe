@@ -5,6 +5,7 @@
 from src import ai
 from src import grid
 import itertools
+import os
 
 
 def main(args):
@@ -19,6 +20,10 @@ def main(args):
         opponent = ai.AI('O')
         players = {'O': opponent.move, 'X': player_turn}
 
+    output_file = 'log.txt'
+    if os.path.isfile(output_file):
+        os.remove(output_file)
+
     done = False
     turn = 0
     while not done:
@@ -27,13 +32,17 @@ def main(args):
         pos = players[player](board)
         board.set(pos, player)
 
+        if args['print']:
+            with open(output_file, 'a') as f:
+                f.write(str(pos) + '\n')
+
         winner = board.check_win()
         if winner or turn >= 9:
             done = True
 
     print('done')
 
-    if args['is_x']:
+    if args['print']:
         with open('results.txt', 'w') as f:
             f.write("{} wins!\n".format(winner))
             f.write(str(board) + '\n')
