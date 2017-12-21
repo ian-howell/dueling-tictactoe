@@ -6,7 +6,6 @@ from subprocess import Popen, PIPE
 
 import itertools
 import os
-import time
 
 bot_cmds = (['python3', '-u', 'run.py', '-x'], ['python3', '-u', 'run.py'])
 bot1 = Popen(bot_cmds[0], stdout=PIPE, stdin=PIPE, bufsize=1,
@@ -32,7 +31,6 @@ for i in itertools.cycle([0, 1]):
 
     # Report back on what bot i said
     print("Bot {}: [{}]".format((i+1), response))
-    time.sleep(1)
 
     # Tell the other bot what bot i said
     bots[i ^ 1].stdin.write(response + '\n')
