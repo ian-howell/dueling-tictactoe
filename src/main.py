@@ -2,6 +2,7 @@
 #
 # Created by Ian Howell on 12/20/17.
 # File name: main.py
+from src import ai
 from src import grid
 import itertools
 
@@ -12,9 +13,11 @@ def main(args):
 
     player_symbols = itertools.cycle('XO')
     if args['is_x']:
-        players = {'X': bot_turn, 'O': player_turn}
+        opponent = ai.AI('X')
+        players = {'X': opponent.move, 'O': player_turn}
     else:
-        players = {'O': bot_turn, 'X': player_turn}
+        opponent = ai.AI('O')
+        players = {'O': opponent.move, 'X': player_turn}
 
     done = False
     turn = 0
@@ -46,10 +49,4 @@ def player_turn(board):
                 raise
         except:
             invalid = True
-    return pos
-
-
-def bot_turn(board):
-    pos = board.get_random_valid()
-    print(pos)
     return pos
