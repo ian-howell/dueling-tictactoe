@@ -21,7 +21,8 @@ def main(args):
     while not done:
         turn += 1
         player = next(player_symbols)
-        players[player](board, player)
+        pos = players[player](board)
+        board.set(pos, player)
 
         winner = board.check_win()
         if winner or turn >= 9:
@@ -35,19 +36,20 @@ def main(args):
             f.write(str(board) + '\n')
 
 
-def player_turn(board, symbol):
+def player_turn(board):
     invalid = True
     while invalid:
         invalid = False
         pos = int(input())
         try:
-            board.set(pos, symbol)
+            if board.at(pos) in 'XO':
+                raise
         except:
-            # print("But that's illegal...")
             invalid = True
+    return pos
 
 
-def bot_turn(board, symbol):
+def bot_turn(board):
     pos = board.get_random_valid()
-    board.set(pos, symbol)
     print(pos)
+    return pos
