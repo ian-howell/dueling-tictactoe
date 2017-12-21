@@ -29,7 +29,6 @@ class AI:
                 best = move_val
                 best_move = position
 
-        print(best_move)
         return best_move
 
     def __get_best_move(self, board, my_turn=False):

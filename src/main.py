@@ -32,6 +32,9 @@ def main(args):
         pos = players[player](board)
         board.set(pos, player)
 
+        if turn % 2 == args['is_x']:
+            print(pos)
+
         if args['print']:
             with open(output_file, 'a') as f:
                 f.write(str(pos) + '\n')
