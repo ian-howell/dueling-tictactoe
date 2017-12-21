@@ -39,20 +39,15 @@ class AI:
         if (score != 0) or (len(possible) == 0):
             return score
 
-        if my_turn:
-            best = -2
-            for position in possible:
-                board.set(position, self.symbol)
-                best = max(best, self.__get_best_move(board, not my_turn))
-                board.unset(position)
-            return best
-        else:
-            best = 2
-            for position in possible:
-                board.set(position, self.opponent)
-                best = min(best, self.__get_best_move(board, not my_turn))
-                board.unset(position)
-            return best
+        best = -2 if my_turn else 2
+        minmax = max if my_turn else min
+        symbol = self.symbol if my_turn else self.opponent
+
+        for position in possible:
+            board.set(position, symbol)
+            best = minmax(best, self.__get_best_move(board, not my_turn))
+            board.unset(position)
+        return best
 
     def __evaluate(self, board):
         winner = board.check_win()
