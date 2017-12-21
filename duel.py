@@ -6,10 +6,11 @@ from subprocess import Popen, PIPE
 
 import itertools
 
-bot_cmds = (['python3', '-u', 'run.py', '-xp'], ['python3', '-u', 'run.py'])
-bot1 = Popen(bot_cmds[0], stdout=PIPE, stdin=PIPE, bufsize=1,
+bot_cmd1 = ['python3', '-u', 'run.py', '-xpd']
+bot_cmd2 = ['python3', '-u', 'run.py', '-d']
+bot1 = Popen(bot_cmd1, stdout=PIPE, stdin=PIPE, bufsize=1,
              universal_newlines=True)
-bot2 = Popen(bot_cmds[1], stdout=PIPE, stdin=PIPE, bufsize=1,
+bot2 = Popen(bot_cmd2, stdout=PIPE, stdin=PIPE, bufsize=1,
              universal_newlines=True)
 bots = (bot1, bot2)
 

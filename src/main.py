@@ -29,10 +29,15 @@ def main(args):
     while not done:
         turn += 1
         player = next(player_symbols)
+
+        if (not args['duel']):
+            show_board(board)
+            print("It is {}'s turn...".format(player))
+
         pos = players[player](board)
         board.set(pos, player)
 
-        if turn % 2 == args['is_x']:
+        if (args['duel']) and (turn % 2 == args['is_x']):
             print(pos)
 
         if args['print']:
@@ -43,7 +48,14 @@ def main(args):
         if winner or turn >= 9:
             done = True
 
-    print('done')
+    if (not args['duel']):
+        show_board(board)
+        if winner:
+            print("{} wins!".format(winner))
+        else:
+            print("No one wins!")
+    else:
+        print('done')
 
     if args['print']:
         with open('results.txt', 'w') as f:
@@ -60,5 +72,19 @@ def player_turn(board):
             if board.at(pos) in 'XO':
                 raise
         except:
+            show_board(board)
+            print("That's invalid. Try again")
             invalid = True
     return pos
+
+
+def show_board(board):
+    os.system("clear")
+    print(board)
+    print("*" * 10)
+    print("HELP:")
+    print(" 0 | 1 | 2 ")
+    print("---+---+---")
+    print(" 3 | 4 | 5 ")
+    print("---+---+---")
+    print(" 6 | 7 | 8 ")

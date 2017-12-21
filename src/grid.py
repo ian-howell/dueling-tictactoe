@@ -10,7 +10,7 @@ class Grid:
         self.size = size ** 2
         self.rows = size
         self.cols = size
-        self.grid = ['-'] * 9
+        self.grid = [' '] * 9
         self.open_squares = set()
         for i in range(9):
             self.open_squares.add(i)
@@ -19,12 +19,17 @@ class Grid:
                                 (0, 4, 8), (2, 4, 6))
 
     def __str__(self):
+        fmt = " {} | {} | {}"
         output = ""
-        for r in range(self.rows):
-            for c in range(self.cols):
-                output += str(self.at(r * self.cols + c))
-            output += '\n'
-        return output.strip()
+        i = 0
+        output += fmt.format(self.at(i), self.at(i + 1), self.at(i + 2))
+        output += "\n---+---+---\n"
+        i += 3
+        output += fmt.format(self.at(i), self.at(i + 1), self.at(i + 2))
+        output += "\n---+---+---\n"
+        i += 3
+        output += fmt.format(self.at(i), self.at(i + 1), self.at(i + 2))
+        return output
 
     def print(self):
         for r in range(self.rows):
@@ -41,7 +46,7 @@ class Grid:
             raise Exception(fmt.format(pos, val))
 
     def unset(self, pos):
-        self.grid[pos] = '-'
+        self.grid[pos] = ' '
         self.open_squares.add(pos)
 
     def at(self, pos):

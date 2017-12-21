@@ -13,4 +13,7 @@ parser.add_argument('-x', '--is_x', action='store_true', help=x_help)
 results_help = "If set, log the game to log.txt and the results to results.txt"
 parser.add_argument('-p', '--print', action='store_true', help=results_help)
 
+duel_help = "Only used in duel.py"
+parser.add_argument('-d', '--duel', action='store_true', help=duel_help)
+
 main.main(vars(parser.parse_args()))
