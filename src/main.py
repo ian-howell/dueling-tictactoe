@@ -35,6 +35,11 @@ def main(args):
             print("It is {}'s turn...".format(player))
 
         pos = players[player](board)
+
+        if pos is None:
+            print("\rGoodbye!")
+            return
+
         board.set(pos, player)
 
         if (args['duel']) and (turn % 2 == args['is_x']):
@@ -67,10 +72,12 @@ def player_turn(board):
     invalid = True
     while invalid:
         invalid = False
-        pos = int(input())
         try:
+            pos = int(input())
             if board.at(pos) in 'XO':
                 raise
+        except KeyboardInterrupt:
+            return None
         except:
             show_board(board)
             print("That's invalid. Try again")
