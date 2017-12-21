@@ -40,6 +40,10 @@ class Grid:
             fmt = "Cannot set [{}] to {}"
             raise Exception(fmt.format(pos, val))
 
+    def unset(self, pos):
+        self.grid[pos] = '-'
+        self.open_squares.add(pos)
+
     def at(self, pos):
         if 0 <= pos < self.size:
             return self.grid[pos]
