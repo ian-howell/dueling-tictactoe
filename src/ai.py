@@ -54,3 +54,9 @@ class AI:
         if winner:
             return 1 if (winner == self.symbol) else -1
         return 0
+
+    def random_nonsense(self):
+        things = ("Good move!", "Hmm...", "I'm thinking", "You're on!",
+                  "Really?", "Rookie mistake...", "I'm gonna win!",
+                  "That was dumb!", "My turn!", "WTF?!?", "Here I come ;)")
+        return random.sample(things, 1)[0]

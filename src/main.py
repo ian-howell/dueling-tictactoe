@@ -6,6 +6,7 @@ from src import ai
 from src import grid
 import itertools
 import os
+import time
 
 
 def main(args):
@@ -33,6 +34,9 @@ def main(args):
         if (not args['duel']):
             show_board(board)
             print("It is {}'s turn...".format(player))
+            if (turn % 2) == args['is_x']:
+                print(opponent.random_nonsense())
+                time.sleep(1)
 
         pos = players[player](board)
 
